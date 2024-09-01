@@ -1,0 +1,45 @@
+<odoo>
+  <data>
+   <record id="edit_project_development" model="ir.ui.view">
+            <field name="name">project.development.form</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date']" position="after">
+                  <field name="odoo_version"/>
+                  <field name="odoo_type"/>
+                  <field name="gitHub_repo_name"/>
+                  <field name="gitHub_repo_url" widget="url" />
+                </xpath>
+               <xpath expr="//notebook" position="inside">
+                   <page name="hosting" string="Hosting">
+                       <label for="hosting"/>
+                       <field name="hosting"/>
+                       <field name="hosting_description" nolabel="1" options="{'resizable': false}" placeholder="Hosting Description"/>
+                   </page>
+                   <page name="collaborators" string="Collaborators">
+                       <field name="collaborator_ids">
+                           <tree editable="bottom"
+                                 decoration-success="state == 'active'"
+                                 decoration-danger="state == 'inactive'">
+                               <field name="employee_id"/>
+                               <field name="state"/>
+                               <button name="make_active"
+                                type="object"
+                                string="Activate"
+                               invisible="state =='active'"/>
+                               <button name="make_inactive"
+                                type="object"
+                                string="Deactivate"
+                               invisible="state =='inactive'"/>
+                           </tree>
+
+                       </field>
+                   </page>
+
+                </xpath>
+
+            </field>
+        </record>
+  </data>
+</odoo>

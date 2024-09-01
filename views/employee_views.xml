@@ -1,0 +1,56 @@
+<odoo>
+  <data>
+      <record id="view_employee_project_development_from" model="ir.ui.view">
+            <field name="name">employee.project.development.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='work_email']" position="after">
+                    <field name="github_account"/>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page name="projects" string="Projects">
+                       <field name="project_ids">
+                           <tree decoration-success="state == 'active'"
+                                 decoration-danger="state == 'inactive'">
+                               <field name="project_id"/>
+                               <field name="state"/>
+                               <button name="make_active"
+                                type="object"
+                                string="Activate"
+                               invisible="state =='active'"/>
+                               <button name="make_inactive"
+                                type="object"
+                                string="Deactivate"
+                               invisible="state =='inactive'"/>
+                           </tree>
+
+                       </field>
+                   </page>
+                </xpath>
+            </field>
+      </record>
+      <record id="view_employee_project_development_tree" model="ir.ui.view">
+          <field name="name">employee.project.development.tree</field>
+          <field name="model">hr.employee</field>
+          <field name="inherit_id" ref="hr.view_employee_tree"/>
+          <field name="arch" type="xml">
+              <xpath expr="//field[@name='work_email']" position="after">
+                  <field name="github_account"/>
+              </xpath>
+          </field>
+      </record>
+      <record id="view_employee_project_development_kanban" model="ir.ui.view">
+          <field name="name">employee.project.development.kanban</field>
+          <field name="model">hr.employee</field>
+          <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+          <field name="arch" type="xml">
+              <xpath expr="//field[@name='category_ids']" position="before">
+                  <li t-if="record.github_account.raw_value" class="o_text_overflow">
+                   <span>Github:</span>  <field name="github_account"/>
+                  </li>
+              </xpath>
+          </field>
+      </record>
+  </data>
+</odoo>
