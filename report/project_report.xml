@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="project_development_report" model="ir.actions.report">
+            <field name="name">Print Project</field>
+            <field name="model">project.project</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">project_development.print_project</field>
+            <field name="report_file">project_development.print_project</field>
+            <field name="print_report_name">'Projects'</field>
+            <field name="binding_model_id" ref="model_project_project"/>
+            <field name="binding_type">report</field>
+        </record>
+        <template id="print_project">
+            <t t-call="web.basic_layout">
+                <div class="page o_content_pdf">
+                    <div class="oe_structure"></div>
+                    <h2>Project List</h2>
+                    <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-start">Project Name</th>
+                            <th class="text-start">Project Date</th>
+                            <th class="text-start">Project GitHub Repo. Name</th>
+                            <th class="text-start">Project GitHub Repo. URL</th>
+                            <th class="text-start">Project Odoo Version</th>
+                            <th class="text-start">Project Odoo Type</th>
+                            <th class="text-start">Project Odoo Hosting</th>
+                            <th class="text-start">Project Collaborators</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="docs" t-as="project">
+                            <tr>
+                                <td class="text-end"><p t-field="project.name"/></td>
+                                <td class="text-end"><span t-field="project.date_start">-<span t-field="project.date"/></span></td>
+                                <td class="text-end"><p t-field="project.gitHub_repo_name"/></td>
+                                <td class="text-end"><p t-field="project.gitHub_repo_url"/></td>
+                                <td class="text-end"><p t-field="project.odoo_version"/></td>
+                                <td class="text-end"><p t-field="project.odoo_type"/></td>
+                                <td class="text-end"><p t-field="project.hosting"/></td>
+                                <td class="text-end">
+                                    <ul>
+                                        <t t-foreach="project.collaborator_ids" t-as="line">
+                                            <li>
+                                            <p t-field="line.employee_id.name"/>
+                                            </li>
+                                        </t>
+                                    </ul>
+
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                    </table>
+
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>
